@@ -9,9 +9,8 @@ from langchain_core.output_parsers import StrOutputParser
 load_dotenv()
 
 # ------------------ EMBEDDINGS ------------------
-embeddings = HuggingFaceEmbeddings(
-    model_name="sentence-transformers/all-MiniLM-L6-v2"
-)
+embeddings = HuggingFaceEmbeddings(model_name="intfloat/e5-small-v2")
+
 
 # ------------------ LLM (Qwen3-8B) ------------------
 llm_endpoint = HuggingFaceEndpoint(
