@@ -13,7 +13,11 @@ app = FastAPI()
 # -------------- CORS (Allow Next.js) ----------------
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],  # replace with Vercel domain later
+    allow_origins=[
+        "https://study-abroad-rag-ai-frontend-ek2i.vercel.app",
+        "https://study-abroad-rag-ai-frontend-ek2i-fay6su70g.vercel.app",
+        "http://localhost:3000",  # for local development
+    ],
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
