@@ -1,0 +1,13 @@
+fastapi
+uvicorn
+pydantic
+python-dotenv
+supabase
+bcrypt
+pyjwt
+langchain-huggingface
+langchain-core
+sentence-transformers
+google-genai
+requests
+huggingface-hub
