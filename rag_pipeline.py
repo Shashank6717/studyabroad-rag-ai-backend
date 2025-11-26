@@ -9,9 +9,7 @@ from langchain_core.output_parsers import StrOutputParser
 load_dotenv()
 
 # ------------------ EMBEDDINGS ------------------
-# embeddings = HuggingFaceEmbeddings(model_name="intfloat/e5-small-v2")
-from langchain_google_genai import GoogleGenerativeAIEmbeddings
-embeddings = GoogleGenerativeAIEmbeddings(model="models/text-embedding-004")
+embeddings = HuggingFaceEmbeddings(model_name="intfloat/e5-small-v2")
 
 
 # ------------------ LLM (Qwen3-8B) ------------------
