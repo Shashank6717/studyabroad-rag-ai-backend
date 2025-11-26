@@ -6,6 +6,7 @@ import bcrypt
 from utils.jwt_utils import create_access_token,verify_token
 from fastapi import Header
 from utils.gemini import generate_chat_title
+import os
 
 
 app = FastAPI()
@@ -334,3 +335,16 @@ def delete_chat(chat_id: str, authorization: str = Header(None)):
     supabase.table("chat_messages").delete().eq("chat_id", chat_id).execute()
 
     return {"message": "Chat deleted successfully"}
+
+
+if __name__ == "__main__":
+    import uvicorn
+
+    PORT = int(os.environ.get("PORT", 8000))
+
+    uvicorn.run(
+        "main:app",
+        host="0.0.0.0",
+        port=PORT,
+        reload=False
+    )

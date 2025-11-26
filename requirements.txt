@@ -8,5 +8,4 @@ python-jose[cryptography]
 langchain-huggingface
 langchain-core
 google-genai
-sentence-transformers
-faiss-cpu
+langchain-google-genai
