@@ -5,6 +5,7 @@ from langchain_huggingface import HuggingFaceEndpoint, ChatHuggingFace, HuggingF
 from langchain_core.prompts import ChatPromptTemplate
 from langchain_core.runnables import RunnablePassthrough
 from langchain_core.output_parsers import StrOutputParser
+from operator import itemgetter
 
 load_dotenv()
 from langchain_huggingface import HuggingFaceEndpointEmbeddings
@@ -17,7 +18,7 @@ embeddings = HuggingFaceEndpointEmbeddings(
 
 # ------------------ LLM (Qwen3-8B) ------------------
 llm_endpoint = HuggingFaceEndpoint(
-    repo_id="Qwen/Qwen3-8B",
+    repo_id="moonshotai/Kimi-K2-Thinking",
     task="text-generation",
     max_new_tokens=250,
     temperature=0.2,
@@ -53,13 +54,24 @@ Please provide a helpful answer based on the context above and the conversation 
 ])
 
 # ------------------ LCEL RAG CHAIN ------------------
+# ------------------ LCEL RAG CHAIN ------------------
+def debug_input(x):
+    print(f"DEBUG CHAIN INPUT: {x}")
+    return x
+
+def debug_output(x):
+    print(f"DEBUG CHAIN OUTPUT: {x}")
+    return x
+
 rag_chain = (
     {
-        "context": RunnablePassthrough(),
-        "question": RunnablePassthrough(),
-        "chat_history": RunnablePassthrough()
+        "context": itemgetter("context"),
+        "question": itemgetter("question"),
+        "chat_history": itemgetter("history")
     }
+    | RunnablePassthrough(debug_input)
     | prompt
     | llm
+    | RunnablePassthrough(debug_output)
     | StrOutputParser()
 )
