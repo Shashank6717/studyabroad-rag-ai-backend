@@ -21,7 +21,7 @@ embeddings = HuggingFaceEndpointEmbeddings(
 # embeddings = HuggingFaceEmbeddings( model_name="sentence-transformers/all-MiniLM-L6-v2" )
 # # ------------------ LLM (Qwen3-8B) ------------------
 llm_endpoint = HuggingFaceEndpoint(
-    repo_id="Qwen/Qwen3-8B",
+    repo_id="moonshotai/Kimi-K2-Thinking",
     task="text-generation",
     max_new_tokens=250,
     temperature=0.2,

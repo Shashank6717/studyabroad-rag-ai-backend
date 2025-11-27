@@ -249,9 +249,6 @@ def chat_query(
         return {"error": "chat_id is required"}
 
     chat_info = supabase.table("chats").select("title").eq("id", chat_id).execute()
-    if not chat_info.data:
-        return {"error": "Chat session not found"}
-
     current_title = chat_info.data[0]["title"]
 
 
@@ -274,7 +271,10 @@ def chat_query(
         role = "User" if msg["role"] == "user" else "Assistant"
         history_messages.append(f"{role}: {msg['content']}")
 
-    history_text = "\n".join(history_messages)
+    history_text = "\n".join(history_messages) if history_messages else "No previous conversation."
+    
+    print(f"DEBUG: Question: {question}")
+    print(f"DEBUG: History: {history_text}")
 
     # ------------------- EMBEDDING ---------------------
     q_emb = embeddings.embed_query(question)
@@ -291,7 +291,7 @@ def chat_query(
 
     chunks = [r["content"] for r in result.data]
     context = "\n\n".join(chunks)
-
+    
     # ------------------- RAG + MEMORY ---------------------
     answer = rag_chain.invoke({
         "history": history_text,
