@@ -257,7 +257,7 @@ def chat_query(
         supabase.table("chats").update({"title": title}).eq("id", chat_id).execute()
     if not question:
         return {"error": "Please enter a question."}
-
+    print("somethig starts")
     # ------------------- FETCH CONVERSATION HISTORY ---------------------
     history_res = supabase.table("chat_messages") \
         .select("*") \
@@ -275,7 +275,7 @@ def chat_query(
 
     # ------------------- EMBEDDING ---------------------
     q_emb = embeddings.embed_query(question)
-
+    print(q_emb)
     # ------------------- VECTOR SEARCH ---------------------
     result = supabase.rpc("match_documentsssss", {
         "query_embedding": q_emb,
@@ -295,7 +295,7 @@ def chat_query(
         "context": context,
         "question": question
     })
-
+    print(answer)
     # ------------------- SAVE MESSAGES ---------------------
     # Save user's message
     supabase.table("chat_messages").insert({
