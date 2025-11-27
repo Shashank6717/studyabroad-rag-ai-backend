@@ -17,7 +17,7 @@ embeddings = HuggingFaceEndpointEmbeddings(
 
 # ------------------ LLM (Qwen3-8B) ------------------
 llm_endpoint = HuggingFaceEndpoint(
-    repo_id="meta-llama/Llama-3.1-8B",
+    repo_id="google/gemma-2-2b-it",
     task="text-generation",
     max_new_tokens=512,
     temperature=0.2,
