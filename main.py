@@ -340,7 +340,7 @@ def delete_chat(chat_id: str, authorization: str = Header(None)):
 if __name__ == "__main__":
     import uvicorn
 
-    PORT = int(os.environ.get("PORT", 8000))
+    PORT = int(os.environ.get("PORT", 4000,10000))
 
     uvicorn.run(
         "main:app",
