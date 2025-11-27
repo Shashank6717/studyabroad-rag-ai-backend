@@ -8,9 +8,18 @@ from langchain_core.output_parsers import StrOutputParser
 
 load_dotenv()
 
+
+from langchain_huggingface import HuggingFaceEndpointEmbeddings
+
+embeddings = HuggingFaceEndpointEmbeddings(
+    model="sentence-transformers/all-MiniLM-L6-v2",
+    task="feature-extraction",
+    huggingfacehub_api_token=os.getenv("HUGGINGFACEHUB_API_TOKEN"),
+)
+
 # ------------------ EMBEDDINGS ------------------
-embeddings = HuggingFaceEmbeddings( model_name="sentence-transformers/all-MiniLM-L6-v2" )
-# ------------------ LLM (Qwen3-8B) ------------------
+# embeddings = HuggingFaceEmbeddings( model_name="sentence-transformers/all-MiniLM-L6-v2" )
+# # ------------------ LLM (Qwen3-8B) ------------------
 llm_endpoint = HuggingFaceEndpoint(
     repo_id="Qwen/Qwen3-8B",
     task="text-generation",

@@ -249,6 +249,9 @@ def chat_query(
         return {"error": "chat_id is required"}
 
     chat_info = supabase.table("chats").select("title").eq("id", chat_id).execute()
+    if not chat_info.data:
+        return {"error": "Chat session not found"}
+
     current_title = chat_info.data[0]["title"]
 
 
