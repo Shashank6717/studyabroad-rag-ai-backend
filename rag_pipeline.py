@@ -5,6 +5,7 @@ from langchain_huggingface import HuggingFaceEndpoint, ChatHuggingFace, HuggingF
 from langchain_core.prompts import ChatPromptTemplate
 from langchain_core.runnables import RunnablePassthrough
 from langchain_core.output_parsers import StrOutputParser
+from operator import itemgetter
 
 load_dotenv()
 from langchain_huggingface import HuggingFaceEndpointEmbeddings
@@ -16,14 +17,24 @@ embeddings = HuggingFaceEndpointEmbeddings(
 )
 
 # ------------------ LLM (Qwen3-8B) ------------------
+# llm_endpoint = HuggingFaceEndpoint(
+#     repo_id="google/gemma-2-2b-it",
+#     task="text-generation",
+#     max_new_tokens=512,
+#     temperature=0.2,
+# )
+
+# llm = ChatHuggingFace(llm=llm_endpoint)
+
 llm_endpoint = HuggingFaceEndpoint(
-    repo_id="google/gemma-2-2b-it",
+    repo_id="meta-llama/Llama-3.1-8B-Instruct",
     task="text-generation",
     max_new_tokens=512,
     temperature=0.2,
+    huggingfacehub_api_token=os.getenv("HUGGINGFACEHUB_API_TOKEN"),
 )
-
 llm = ChatHuggingFace(llm=llm_endpoint)
+
 
 # ------------------ PROMPT TEMPLATE ------------------
 prompt = ChatPromptTemplate.from_messages([
@@ -55,9 +66,9 @@ Please provide a helpful answer based on the context above and the conversation 
 # ------------------ LCEL RAG CHAIN ------------------
 rag_chain = (
     {
-        "context": RunnablePassthrough(),
-        "question": RunnablePassthrough(),
-        "chat_history": RunnablePassthrough()
+        "context": itemgetter("context"),
+        "question": itemgetter("question"),
+        "chat_history": itemgetter("history")
     }
     | prompt
     | llm
